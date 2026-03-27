@@ -16,7 +16,7 @@ namespace NapPlana.Core.Event.Handler;
 public static class BotEventHandler
 {
     private static IEventHandler _instance = new EventHandler();
-    
+
     /// <summary>
     /// 设置事件处理器实例 (供DI使用)
     /// </summary>
@@ -25,14 +25,14 @@ public static class BotEventHandler
     {
         _instance = instance ?? throw new ArgumentNullException(nameof(instance));
     }
-    
+
     /// <summary>
     /// 获取当前事件处理器实例
     /// </summary>
     public static IEventHandler GetInstance() => _instance;
-    
+
     #region 日志事件
-    
+
     /// <summary>
     /// 日志通知事件
     /// </summary>
@@ -41,7 +41,7 @@ public static class BotEventHandler
         add => _instance.OnLogReceived += value;
         remove => _instance.OnLogReceived -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -51,11 +51,11 @@ public static class BotEventHandler
     {
         _instance.LogReceived(logLevel, message);
     }
-    
-    #endregion
-    
+
+    #endregion 日志事件
+
     #region 元事件
-    
+
     /// <summary>
     /// 机器人 - 上线
     /// </summary>
@@ -64,7 +64,7 @@ public static class BotEventHandler
         add => _instance.OnBotConnected += value;
         remove => _instance.OnBotConnected -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -72,7 +72,7 @@ public static class BotEventHandler
     {
         _instance.BotConnected();
     }
-    
+
     /// <summary>
     /// 机器人 - 心跳
     /// </summary>
@@ -90,7 +90,7 @@ public static class BotEventHandler
     {
         _instance.BotHeartbeat(ev);
     }
-    
+
     /// <summary>
     /// 机器人 - 生命周期事件
     /// </summary>
@@ -109,8 +109,7 @@ public static class BotEventHandler
         _instance.BotLifeCycle(ev);
     }
 
-    #endregion
-    
+    #endregion 元事件
 
     #region 群聊消息
 
@@ -122,7 +121,7 @@ public static class BotEventHandler
         add => _instance.OnGroupMessageReceived += value;
         remove => _instance.OnGroupMessageReceived -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -132,7 +131,7 @@ public static class BotEventHandler
         _instance.GroupMessageReceived(ev);
     }
 
-    #endregion
+    #endregion 群聊消息
 
     #region 私信消息
 
@@ -144,7 +143,7 @@ public static class BotEventHandler
         add => _instance.OnPrivateMessageReceived += value;
         remove => _instance.OnPrivateMessageReceived -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -153,7 +152,7 @@ public static class BotEventHandler
     {
         _instance.PrivateMessageReceived(ev);
     }
-    
+
     /// <summary>
     /// 消息 - 私信 - 临时会话
     /// </summary>
@@ -162,7 +161,7 @@ public static class BotEventHandler
         add => _instance.OnPrivateMessageReceivedTemporary += value;
         remove => _instance.OnPrivateMessageReceivedTemporary -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -171,7 +170,7 @@ public static class BotEventHandler
     {
         _instance.PrivateMessageReceivedTemporary(ev);
     }
-    
+
     /// <summary>
     /// 消息 - 私信 - 好友
     /// </summary>
@@ -190,7 +189,7 @@ public static class BotEventHandler
         _instance.PrivateMessageReceivedFriend(ev);
     }
 
-    #endregion
+    #endregion 私信消息
 
     #region 自身发送
 
@@ -202,7 +201,7 @@ public static class BotEventHandler
         add => _instance.OnMessageSentGroup += value;
         remove => _instance.OnMessageSentGroup -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -211,7 +210,7 @@ public static class BotEventHandler
     {
         _instance.MessageSentGroup(ev);
     }
-    
+
     /// <summary>
     /// 消息发送 - 私聊
     /// </summary>
@@ -220,7 +219,7 @@ public static class BotEventHandler
         add => _instance.OnMessageSentPrivate += value;
         remove => _instance.OnMessageSentPrivate -= value;
     }
-    
+
     /// <summary>
     /// 系统内部调用，程序集外请勿使用
     /// </summary>
@@ -229,7 +228,7 @@ public static class BotEventHandler
     {
         _instance.MessageSentPrivate(ev);
     }
-    
+
     /// <summary>
     /// 消息发送 - 私聊 - 临时会话
     /// </summary>
@@ -247,7 +246,7 @@ public static class BotEventHandler
     {
         _instance.MessageSentTemporary(ev);
     }
-    
+
     /// <summary>
     /// 消息发送 - 私聊 - 好友
     /// </summary>
@@ -266,9 +265,10 @@ public static class BotEventHandler
         _instance.MessageSentPrivateFriend(ev);
     }
 
-    #endregion
+    #endregion 自身发送
 
     #region 通知事件
+
     // ================== 好友相关 ==================
     /// <summary>
     /// 通知 - 好友添加 (notice.friend_add)
@@ -637,7 +637,7 @@ public static class BotEventHandler
     {
         _instance.GroupEssenceAddNoticeReceived(ev);
     }
-    
+
     /// <summary>
     /// 通知 - 群精华消息移除 (notice.essence.delete)
     /// </summary>
@@ -674,7 +674,7 @@ public static class BotEventHandler
     {
         _instance.GroupMsgEmojiLikeNoticeReceived(ev);
     }
-    
+
     // ================== Notify子类型 ==================
     /// <summary>
     /// 通知 - 戳一戳 (notice.notify.poke) - 好友
@@ -766,7 +766,7 @@ public static class BotEventHandler
         _instance.ProfileLikeNoticeReceived(ev);
     }
 
-    #endregion
+    #endregion 通知事件
 
     #region 请求事件
 
@@ -806,6 +806,5 @@ public static class BotEventHandler
         _instance.GroupRequestReceived(ev);
     }
 
-    #endregion
-    
+    #endregion 请求事件
 }
